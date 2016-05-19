@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {Routes, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+import {Routes, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from 'angular2/router';
 import HeroesComponent from './heroes.component';
 import DashboardComponent from './dashboard.component';
 import HeroDetailComponent from './hero-detail.component';
@@ -10,8 +10,8 @@ console.log(ROUTER_PROVIDERS);
     template: `
         <h1>{{title}}</h1>
         <nav>
-            <a [routerLink]="['/heroes']">Heroes</a>
             <a [routerLink]="['/dashboard']">Dashboard</a>
+            <a [routerLink]="['/heroes']">Heroes</a>
         </nav>
         <router-outlet></router-outlet>
     `,
@@ -25,8 +25,8 @@ console.log(ROUTER_PROVIDERS);
     }),
     new Route({
         path: '/dashboard',
-        component: DashboardComponent,
-        useAsDefault: true
+        component: DashboardComponent
+        //useAsDefault: true, ng2 not supported yet, comming soon
     }),
     new Route({
         path: '/detail/:id',
@@ -34,7 +34,15 @@ console.log(ROUTER_PROVIDERS);
     })
 ])
 export default class App{
-    constructor(){
+    constructor(router){
         this.title = 'Tour of Heros';
+        this.router = router;
+    }
+    ngOnInit(){
+        //workaround before default route is available
+        this.router.navigateByUrl('/dashboard');
+    }
+    static get parameters(){
+        return [[Router]]
     }
 };
