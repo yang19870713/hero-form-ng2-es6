@@ -25,7 +25,11 @@ let  common = {
             exclude: /node_modules/
         }, {
             test  : /\.s[ac]ss$/,
-            loader: "style!css?module&localIdentName=[local]__[hash:base64:10]!sass"
+            loader: "style!css?module&localIdentName=[local]__[hash:base64:10]!sass",
+            exclude: /\.ng\.s[ac]ss$/
+        },{
+            test  : /\.ng\.s[ac]ss$/,
+            loader: "style!css?module&localIdentName=[local]!sass"
         }, {
             test  : /\.(jpe?g|svg|png)$/,
             loader: "url?limit=10000&name=/images/[hash:20].[ext]"
